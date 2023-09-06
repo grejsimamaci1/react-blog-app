@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Button, TextField, Dialog, DialogActions, DialogContent, DialogTitle } from '@mui/material';
 
 interface CreatePostModalProps {
@@ -11,8 +11,14 @@ const CreatePostModal: React.FC<CreatePostModalProps> = ({ isOpen, onClose, onCr
   const [newPostTitle, setNewPostTitle] = useState('');
   const [newPostContent, setNewPostContent] = useState('');
 
+  useEffect(()=>{
+    if (!isOpen) {
+      setNewPostContent('');
+      setNewPostTitle('');
+    }
+  }, [isOpen]);
+
   const handleCreatePost = () => {
-    console.log('handleCreatePost called');
     if (newPostTitle && newPostContent) {
       onCreatePost({ title: newPostTitle, content: newPostContent });
       onClose();
