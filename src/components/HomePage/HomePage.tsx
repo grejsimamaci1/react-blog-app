@@ -7,7 +7,7 @@
 
 
 // const HomePage:  React.FC<HomePageProps<Post>> = ({dummyPosts, setDummyPosts}) => {
-  
+
 
 //   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -107,12 +107,12 @@
 
 
 //redux
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Button, Typography, Grid, Card, CardContent, CardActions, Avatar, TextField } from '@mui/material';
 import { Link, useNavigate } from 'react-router-dom';
 import CreatePostModal from '../CreatePostModal';
-import { useDispatch, useSelector } from 'react-redux'; 
-import { logout} from '../../redux/authSlice'
+import { useDispatch, useSelector } from 'react-redux';
+import { logout } from '../../redux/authSlice'
 import { HomePageProps, Post } from '../types';
 import { addPost, removePost, editPost } from '../../redux/postsSlice';
 
@@ -121,14 +121,12 @@ const HomePage: React.FC<HomePageProps<Post>> = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-const isAuthenticated = useSelector(
+  const isAuthenticated = useSelector(
     (state: { auth: { isAuthenticated: boolean, user: { name: string } | null } }) => state.auth.isAuthenticated
-)
+  )
 
-const posts = useSelector((state: { posts: Post[]}) => state.posts);
-// console.log('postsssssssssss', posts)
+  const posts = useSelector((state: { posts: Post[] }) => state.posts);
 
- 
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const openModal = () => {
@@ -138,41 +136,50 @@ const posts = useSelector((state: { posts: Post[]}) => state.posts);
   const closeModal = () => {
     setIsModalOpen(false);
   };
-const [editingPostId, setEditingPostId] = useState<number | null>(null);
-const [updatedContent, setUpdatedContent] = useState(""); 
+  const [editingPostId, setEditingPostId] = useState<number | null>(null);
+  const [updatedContent, setUpdatedContent] = useState("");
 
-const handleEditPost = (postId: number) =>{
-  setEditingPostId(postId);
-}
+  const handleEditPost = (postId: number) => {
+    setEditingPostId(postId);
+  }
 
-const handleSavePost = (postId: number, updatedContent: string) =>{
-  dispatch(editPost({ postId, updatedContent}));
-  setEditingPostId(null);
-}
+  const handleSavePost = (postId: number, updatedContent: string) => {
+    dispatch(editPost({ postId, updatedContent }));
+    setEditingPostId(null);
+  }
 
-const handleCancelEdit = () =>{
-  setEditingPostId(null);
-}
+  const handleCancelEdit = () => {
+    setEditingPostId(null);
+  }
 
-const handleRemovePost = (postId: number) =>{
-  dispatch(removePost(postId));
-}
+  const handleRemovePost = (postId: number) => {
+    dispatch(removePost(postId));
+  }
 
-const handleAddPost = (newPost: { title: string; content: string}) => {
-  console.log('handle add post called', newPost);
-  dispatch(addPost(newPost))
-}
-const handleLogout = () => {
-  dispatch(logout());
-  navigate('/');
-};
+  const handleAddPost = (newPost: { title: string; content: string }) => {
+    console.log('handle add post called', newPost);
+    dispatch(addPost(newPost))
+  }
+  const handleLogout = () => {
+    dispatch(logout());
+    localStorage.removeItem('accessToken');
+    navigate('/');
+  };
 
- 
+  useEffect(()=>{
+    if (!isAuthenticated) {
+      console.log('user is not authen', isAuthenticated)
+      navigate('/');
+    }
+
+  }, [isAuthenticated])
+
+
   return (
     <div>
       {isAuthenticated && (
         <div>
-          <Button variant="contained" onClick={handleLogout} style={{justifyContent: 'flex-end', display: 'flex'}}>
+          <Button variant="contained" onClick={handleLogout} style={{ justifyContent: 'flex-end', display: 'flex' }}>
             Logout
           </Button>
           <div style={{ display: 'flex', flexDirection: 'row' }}>
@@ -203,7 +210,7 @@ const handleLogout = () => {
                         <Typography variant="caption">{post.author.accountPlan}</Typography>
                       </div>
                     </div>
-                    {editingPostId === post.id ? ( 
+                    {editingPostId === post.id ? (
                       <>
                         <TextField
                           label="Edit Content"
@@ -231,7 +238,7 @@ const handleLogout = () => {
                   </CardContent>
                   <CardActions>
                     {editingPostId === post.id ? (
-                      <Button disabled>Edit</Button> 
+                      <Button disabled>Edit</Button>
                     ) : (
                       <Button onClick={() => handleEditPost(post.id)}>Edit</Button>
                     )}

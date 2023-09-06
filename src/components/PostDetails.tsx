@@ -218,7 +218,7 @@
 
 // export default PostDetails;
 //test
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { Typography, Button, Card, CardContent, TextField, CardActions } from '@mui/material';
 import { PostDetailsProps, Post, Comment } from './types';
@@ -275,8 +275,16 @@ const PostDetails: React.FC<PostDetailsProps<Post>> = () => {
 
   const handleLogout = () => {
     dispatch(logout());
+    localStorage.removeItem('accessToken');
     navigate('/');
   };
+  
+  useEffect(()=>{
+    if (!isAuthenticated) {
+      navigate('/');
+    }
+
+  }, [isAuthenticated])
 
   return (
     <>

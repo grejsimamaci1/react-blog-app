@@ -26,8 +26,6 @@ const postsSlice = createSlice({
         addComment: (state, action) => {
             const { postId, text } = action.payload;
             const post = state.find((post) => post.id === postId);
-
-            console.log('postiii mutit', post)
           
             if (post) {
               const updatedPost = {
