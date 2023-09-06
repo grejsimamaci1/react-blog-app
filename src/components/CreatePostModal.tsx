@@ -12,6 +12,7 @@ const CreatePostModal: React.FC<CreatePostModalProps> = ({ isOpen, onClose, onCr
   const [newPostContent, setNewPostContent] = useState('');
 
   const handleCreatePost = () => {
+    console.log('handleCreatePost called');
     if (newPostTitle && newPostContent) {
       onCreatePost({ title: newPostTitle, content: newPostContent });
       onClose();

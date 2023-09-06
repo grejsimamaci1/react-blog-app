@@ -30,22 +30,22 @@ export interface PostDetailsProps<T> {
     setDummyPosts: React.Dispatch<React.SetStateAction<T[]>>;
 }
 
-export interface Auth {
-    user: null | {
-        id: number;
-        name: string;
-        email: string;
-        password: string;
-        photo: string;
-        accountPlan: string ;
-    };
-    login: (userData: any) => void;
-    logout: () => void;
-}
+// export interface Auth {
+//     user: null | {
+//         id: number;
+//         name: string;
+//         email: string;
+//         password: string;
+//         photo: string;
+//         accountPlan: string ;
+//     };
+//     login: (userData: any) => void;
+//     logout: () => void;
+// }
 
 
-export interface LoginPageProps {
-    auth: Auth;
-    dummyUsers: Auth['user'][];
-  }
+// export interface LoginPageProps {
+//     auth: Auth;
+//     dummyUsers: Auth['user'][];
+//   }
   

@@ -1,16 +1,16 @@
-import { useSessionStorage } from 'react-use';
-import { Auth } from './types';
+// import { useSessionStorage } from 'react-use';
+// import { Auth } from './types';
 
-export const useAuth = () => {
-  const [user, setUser] = useSessionStorage<Auth['user']>('user', null);
+// export const useAuth = () => {
+//   const [user, setUser] = useSessionStorage<Auth['user']>('user', null);
 
-  const login = (userData: Auth['user']) => {
-    setUser(userData);
-  };
+//   const login = (userData: Auth['user']) => {
+//     setUser(userData);
+//   };
 
-  const logout = () => {
-    setUser(null);
-  };
+//   const logout = () => {
+//     setUser(null);
+//   };
 
-  return { user, login, logout };
-};
+//   return { user, login, logout };
+// };
