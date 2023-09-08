@@ -178,12 +178,34 @@ const HomePage: React.FC<HomePageProps<Post>> = () => {
   const navigate = useNavigate();
 
   const isAuthenticated = useSelector((state: { auth: { isAuthenticated: boolean; user: { name: string } | null } }) => state.auth.isAuthenticated);
-  
+  console.log('authenticated', isAuthenticated)
   const posts = useSelector((state: { posts: Post[] }) => state.posts);
+
+
+// const {user} = useSelector((state: { auth: AuthState }) => state.auth);
+// const user  = useSelector((state: { auth: { user: User | null } }) => state.auth.user) as {user: User};
+// const user = useSelector((state: { auth: { user: User | null } }) => state.auth.user);
+const auth = useSelector((state: { auth: AuthState }) => state.auth);
+console.log('authhh', auth);
+
+const userName = auth.user?.name;
+const userEmail= auth.user?.email;
+const userAccountPlan = auth.user?.accountPlan;
+// const { user } = useSelector((state: { auth: AuthState }) => state.auth) as { user: User };
+
+// console.log('userrr', user);
+
+// const userName = user?.user.name;
+// const userEmail = user?.email;
+// const userAccountPlan = user?.accountPlan;
+
+  
+  // console.log('USERRRR', user.user.name)
+
+  
 
   // const user = useSelector((state: { auth: AuthState }) => state.auth.user);
   // console.log('userrrrrrrrrrrrrrrrrrr', user.user.name);
-
 
   // const isAuthenticated = useSelector((state: { auth: AuthState }) => state.auth.isAuthenticated);
 
@@ -239,9 +261,9 @@ const HomePage: React.FC<HomePageProps<Post>> = () => {
      <>
      { isAuthenticated && (
       <>
-      {/* <Typography variant="h6">Welcome, {user?.name}</Typography>
-    <Typography variant="subtitle1">Email: {user?.email}</Typography>
-    <Typography variant="subtitle1">Account Type: {user?.accountPlan}</Typography> */}
+      <Typography variant="h6">Welcome, {userName}</Typography>
+      <Typography variant="subtitle1">Email: {userEmail}</Typography>
+      <Typography variant="subtitle1">Account Type: {userAccountPlan}</Typography>
      <Header>
      <Button variant="outlined" onClick={handleLogout} sx={{marginTop:'50px', alignSelf: 'center', display: 'flex'}}>
      <LogoutIcon/>Logout

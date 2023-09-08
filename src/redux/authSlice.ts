@@ -39,7 +39,7 @@
 // export default authSlice.reducer;
 
 //token based
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createSlice } from '@reduxjs/toolkit';
 
 export interface User {
   id: number;
@@ -68,7 +68,7 @@ export const authSlice = createSlice({
   reducers: {
     login: (state, action) => {
       state.isAuthenticated = true;
-      state.user = action.payload;
+      state.user = action.payload.user;
       state.token = action.payload.token;
     },
     logout: (state) => {
