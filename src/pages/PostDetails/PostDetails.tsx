@@ -1,15 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { Typography, Button, Card, CardContent, TextField, CardActions } from '@mui/material';
-import { PostDetailsProps, Post, Comment } from './types';
+import { PostDetailsProps, Post, Comment } from '../../types';
 import { useDispatch, useSelector } from 'react-redux'; 
-import { logout } from '../redux/authSlice';
-import { addComment, removeComment, editComment } from '../redux/postsSlice';
+import { logout } from '../../redux/authSlice';
+import { addComment, removeComment, editComment } from '../../redux/postsSlice';
 import DeleteIcon from '@mui/icons-material/Delete'; 
 import EditIcon from '@mui/icons-material/Edit';
 import AddIcon from '@mui/icons-material/Add';
 import LogoutIcon from '@mui/icons-material/Logout';
-import { Header } from './styles';
+import { Header } from '../../styles';
 
 const PostDetails: React.FC<PostDetailsProps<Post>> = () => {
   const [newComment, setNewComment] = useState('');

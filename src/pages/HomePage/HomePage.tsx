@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { Button, Typography, Grid, CardContent, CardActions, Avatar, TextField } from '@mui/material';
 import { Link, useNavigate } from 'react-router-dom';
-import CreatePostModal from '../CreatePostModal';
+import CreatePostModal from '../../components/CreatePostModal';
 import { useDispatch, useSelector } from 'react-redux';
 import { logout } from '../../redux/authSlice';
-import { HomePageProps, Post } from '../types';
+import { HomePageProps, Post } from '../../types';
 import { addPost, removePost, editPost } from '../../redux/postsSlice';
 import {
   Header,
@@ -12,7 +12,7 @@ import {
   PostCard,
   AvatarWrapper,
   EditButtonsWrapper,
-} from '../styles';
+} from '../../styles';
 import { AuthState } from '../../redux/authSlice';
 import DeleteIcon from '@mui/icons-material/Delete'; 
 import EditIcon from '@mui/icons-material/Edit';
@@ -24,13 +24,9 @@ const HomePage: React.FC<HomePageProps<Post>> = () => {
   const navigate = useNavigate();
 
   const isAuthenticated = useSelector((state: { auth: { isAuthenticated: boolean; user: { name: string } | null } }) => state.auth.isAuthenticated);
-  console.log('authenticated', isAuthenticated)
   const posts = useSelector((state: { posts: Post[] }) => state.posts);
 
-
-
   const auth = useSelector((state: { auth: AuthState }) => state.auth);
-  // console.log('authhh', auth);
 
   const userName = auth.user?.name;
   const userEmail= auth.user?.email;

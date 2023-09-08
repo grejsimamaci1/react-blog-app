@@ -1,17 +1,15 @@
 import React, { useState } from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import LoginPage from './components/Login/LoginPage';
-import HomePage from './components/HomePage/HomePage';
-import PostDetails from './components/PostDetails';
+import LoginPage from './pages/Login/LoginPage';
+import HomePage from './pages/HomePage/HomePage';
+import PostDetails from './pages/PostDetails/PostDetails';
 import { Provider } from 'react-redux'; 
 import { User} from './redux/authSlice';
 import authReducer from './redux/authSlice';
 import postsReducer from './redux/postsSlice';
-import { Post} from './components/types';
+import { Post} from './types';
 import { createStore,combineReducers, applyMiddleware } from 'redux'; 
 import thunk from 'redux-thunk'; 
-
-
 
 
 const App: React.FC = () => {
