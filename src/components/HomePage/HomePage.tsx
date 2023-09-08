@@ -166,9 +166,12 @@ import {
   PostCard,
   AvatarWrapper,
   EditButtonsWrapper,
-} from '../HomePage/styles'; 
-
-
+} from '../styles';
+import { AuthState } from '../../redux/authSlice';
+import DeleteIcon from '@mui/icons-material/Delete'; 
+import EditIcon from '@mui/icons-material/Edit';
+import AddIcon from '@mui/icons-material/Add';
+import LogoutIcon from '@mui/icons-material/Logout';
 
 const HomePage: React.FC<HomePageProps<Post>> = () => {
   const dispatch = useDispatch();
@@ -177,6 +180,15 @@ const HomePage: React.FC<HomePageProps<Post>> = () => {
   const isAuthenticated = useSelector((state: { auth: { isAuthenticated: boolean; user: { name: string } | null } }) => state.auth.isAuthenticated);
   
   const posts = useSelector((state: { posts: Post[] }) => state.posts);
+
+  // const user = useSelector((state: { auth: AuthState }) => state.auth.user);
+  // console.log('userrrrrrrrrrrrrrrrrrr', user.user.name);
+
+
+  // const isAuthenticated = useSelector((state: { auth: AuthState }) => state.auth.isAuthenticated);
+
+
+
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingPostId, setEditingPostId] = useState<number | null>(null);
@@ -227,17 +239,20 @@ const HomePage: React.FC<HomePageProps<Post>> = () => {
      <>
      { isAuthenticated && (
       <>
+      {/* <Typography variant="h6">Welcome, {user?.name}</Typography>
+    <Typography variant="subtitle1">Email: {user?.email}</Typography>
+    <Typography variant="subtitle1">Account Type: {user?.accountPlan}</Typography> */}
      <Header>
-       <Button variant="contained" onClick={handleLogout}>
-         Logout
+     <Button variant="outlined" onClick={handleLogout} sx={{marginTop:'50px', alignSelf: 'center', display: 'flex'}}>
+     <LogoutIcon/>Logout
        </Button>
-       <AddPostWrapper>
-         <Typography variant="h6">Click here to add a new post:</Typography>
-         <Button variant="contained" onClick={openModal} style={{ marginLeft: '10px' }}>
-           Add
+     </Header>
+     <AddPostWrapper>
+         <Typography variant="h6" sx={{ marginTop: '50px' }}>Add post</Typography>
+         <Button variant="contained" onClick={openModal} style={{ marginLeft: '10px', marginTop: '50px'}}>
+           <AddIcon/>
          </Button>
        </AddPostWrapper>
-     </Header>
      <Grid container spacing={2}>
        {posts.map((post) => (
          <Grid item xs={12} sm={6} md={6} key={post.id} style={{ display: 'flex', justifyContent: 'center' }}>
@@ -260,10 +275,13 @@ const HomePage: React.FC<HomePageProps<Post>> = () => {
                      defaultValue={post.content}
                      fullWidth
                      onChange={(e) => setUpdatedContent(e.target.value)}
+                     style={{
+                      marginTop: "12px",
+                     }}
                    />
                    <EditButtonsWrapper>
-                     <Button onClick={() => handleSavePost(post.id, updatedContent)}>Save</Button>
-                     <Button onClick={handleCancelEdit}>Cancel</Button>
+                     <Button onClick={() => handleSavePost(post.id, updatedContent)} sx={{fontSize: '12px'}}>Save</Button>
+                     <Button onClick={handleCancelEdit} sx={{fontSize: '12px'}}>Cancel</Button>
                    </EditButtonsWrapper>
                  </>
                ) : (
@@ -272,26 +290,31 @@ const HomePage: React.FC<HomePageProps<Post>> = () => {
                    <p>{post.content}</p>
                  </>
                )}
-               <Typography variant="caption" style={{ color: 'gray' }}>
+               {/* <Typography variant="caption" style={{ color: 'gray' }}>
                  Comments {post.comments.length}
-               </Typography>
+               </Typography> */}
+
+               <Link to={`/post/${post.id}`} style={{ textDecoration: 'none' }}>
+                    <Typography component="div">
+                        <Button style={{ textDecoration: 'underline', fontSize: '11px', color: 'gray' }}>View  {post.comments.length} comments</Button>
+                    </Typography>
+               </Link>
              </CardContent>
              <CardActions>
                {editingPostId === post.id ? (
-                 <Button disabled>Edit</Button>
+                 <Button disabled><EditIcon/></Button>
                ) : (
-                 <Button onClick={() => handleEditPost(post.id)}>Edit</Button>
+                 <Button onClick={() => handleEditPost(post.id)}><EditIcon/></Button>
                )}
-               <Button onClick={() => handleRemovePost(post.id)}>Remove</Button>
+               <Button onClick={() => handleRemovePost(post.id)}><DeleteIcon sx={{color: 'red'}}/></Button>
              </CardActions>
-             <Link to={`/post/${post.id}`} style={{ textDecoration: 'none' }}>
-               <Button>View more</Button>
-             </Link>
+            
            </PostCard>
          </Grid>
        ))}
      </Grid>
      <CreatePostModal isOpen={isModalOpen} onClose={closeModal} onCreatePost={handleAddPost} />
+    
      </>
      )}
      </>

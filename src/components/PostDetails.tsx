@@ -5,11 +5,17 @@ import { PostDetailsProps, Post, Comment } from './types';
 import { useDispatch, useSelector } from 'react-redux'; 
 import { logout } from '../redux/authSlice';
 import { addComment, removeComment, editComment } from '../redux/postsSlice';
+import DeleteIcon from '@mui/icons-material/Delete'; 
+import EditIcon from '@mui/icons-material/Edit';
+import AddIcon from '@mui/icons-material/Add';
+import LogoutIcon from '@mui/icons-material/Logout';
+import { Header } from './styles';
 
 const PostDetails: React.FC<PostDetailsProps<Post>> = () => {
   const [newComment, setNewComment] = useState('');
   const [editingCommentId, setEditingCommentId] = useState<number | null>(null);
   const [editedCommentText, setEditedCommentText] = useState<string>('');
+  
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -65,36 +71,58 @@ const PostDetails: React.FC<PostDetailsProps<Post>> = () => {
     if (!isAuthenticated) {
       navigate('/');
     }
-
   }, [isAuthenticated])
 
   return (
     <>
       {isAuthenticated && selectedPost && ( 
         <div>
-          <Button variant="contained" onClick={handleLogout}>
-            Logout
+          <Header>
+              <Button variant="outlined" onClick={handleLogout} sx={{marginBottom:'50px', alignSelf: 'center', display: 'flex'}}>
+                <LogoutIcon/>Logout
           </Button>
-          <Typography variant="h5">{selectedPost.title}</Typography>
+          </Header>
+          <Typography variant="h5"  sx={{paddingBottom: '10px', fontSize:'20px'}}>{selectedPost.title}</Typography>
           <Card>
             <CardContent>
               <Typography>{selectedPost.content}</Typography>
             </CardContent>
           </Card>
-          <Typography variant="h6">Comments</Typography>
+          <Typography variant="h6" sx={{paddingTop: '20px', fontSize:'15px'}}>Comments</Typography>
           {selectedPost.comments.map((comment: Comment) => (
-            <Card key={comment.id}>
+            <Card key={comment.id} sx={{
+              display:"flex",
+              flexDirection:"column",
+              gap:3
+
+            }}>
               <CardContent>
                 {editingCommentId === comment.id ? (
+                  // <TextField
+                  //   label="Edit Comment"
+                  //   multiline
+                  //   variant="outlined"
+                  //   fullWidth
+                  //   value={editedCommentText}
+                  //   onChange={(e) => setEditedCommentText(e.target.value)}
+                  //   style={{
+                  //     height:'20px',
+                  //     marginBottom: '13px'
+                  //   }}
+                  // />
                   <TextField
-                    label="Edit Comment"
-                    multiline
-                    rows={4}
-                    variant="outlined"
-                    fullWidth
-                    value={editedCommentText}
-                    onChange={(e) => setEditedCommentText(e.target.value)}
-                  />
+                  label="Edit Comment"
+                  multiline={!editedCommentText.includes('\n')}
+                  rows={4}
+                  variant="outlined"
+                  fullWidth
+                  value={editedCommentText}
+                  onChange={(e) => setEditedCommentText(e.target.value)}
+                  style={{
+                    height: 'auto', 
+                    marginBottom: '13px',
+                  }}
+                />
                 ) : (
                   <Typography>{comment.text}</Typography>
                 )}
@@ -102,19 +130,19 @@ const PostDetails: React.FC<PostDetailsProps<Post>> = () => {
               <CardActions>
                 {editingCommentId === comment.id ? (
                   <>
-                    <Button onClick={handleSaveComment}>Save</Button>
-                    <Button onClick={handleCancelEdit}>Cancel</Button>
+                    <Button onClick={handleSaveComment} sx={{fontSize: '12px', marginTop: '3px'}}>Save</Button>
+                    <Button onClick={handleCancelEdit} sx={{fontSize: '12px', marginTop: '3px'}}>Cancel</Button>
                   </>
                 ) : (
                   <>
-                    <Button onClick={() => handleEditComment(comment.id, comment.text)}>Edit</Button>
-                    <Button onClick={() => handleRemoveComment(comment.id)}>Remove</Button>
+                    <Button onClick={() => handleEditComment(comment.id, comment.text)}><EditIcon/></Button>
+                    <Button onClick={() => handleRemoveComment(comment.id)}><DeleteIcon sx={{color: 'red'}}/></Button>
                   </>
                 )}
               </CardActions>
             </Card>
           ))}
-          <div style={{ marginTop: '20px' }}>
+          <div style={{ marginTop: '20px', display: 'flex', flexDirection:'row' }}>
             <TextField
               label="Add a new comment"
               variant="outlined"
@@ -122,10 +150,11 @@ const PostDetails: React.FC<PostDetailsProps<Post>> = () => {
               value={newComment}
               onChange={(e) => setNewComment(e.target.value)}
             />
-            <Button variant="contained" style={{ marginTop: '10px' }} onClick={handleAddNewComment}>
-              Add Comment
+            <Button variant="contained" style={{ marginTop: '10px', marginLeft: '5px', height: '100%' }} onClick={handleAddNewComment}>
+             <AddIcon />
             </Button>
           </div>
+         
         </div>
       )}
     </>

@@ -39,7 +39,7 @@
 // export default authSlice.reducer;
 
 //token based
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 export interface User {
   id: number;
@@ -72,7 +72,7 @@ export const authSlice = createSlice({
       state.token = action.payload.token;
     },
     logout: (state) => {
-      console.log('User is logging out'); // Add this line
+      console.log('User is logging out');
       state.isAuthenticated = false;
       state.user = null;
       state.token = null;
