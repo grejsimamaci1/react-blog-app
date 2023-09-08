@@ -22,8 +22,6 @@ const LoginPage: React.FC<LoginPageProps> = ({ dummyUsers }) => {
     const user = dummyUsers.find((u) => u.email === email && u.password === password);
 
     if (user) {
-      // console.log('loginpage  user', user)
-
       const dummyToken = 'dummy-access-token';
       localStorage.setItem('accessToken', dummyToken);
       dispatch(login({ user, token: dummyToken }));
@@ -116,8 +114,3 @@ const LoginPage: React.FC<LoginPageProps> = ({ dummyUsers }) => {
 };
 
 export default LoginPage;
-
-
-
-
-
