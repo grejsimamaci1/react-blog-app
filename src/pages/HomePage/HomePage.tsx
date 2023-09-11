@@ -25,6 +25,7 @@ const HomePage: React.FC<HomePageProps<Post>> = () => {
 
   const isAuthenticated = useSelector((state: { auth: { isAuthenticated: boolean; user: { name: string } | null } }) => state.auth.isAuthenticated);
   const posts = useSelector((state: { posts: Post[] }) => state.posts);
+  console.log('postss', posts)
 
   const auth = useSelector((state: { auth: AuthState }) => state.auth);
 
@@ -102,10 +103,10 @@ const HomePage: React.FC<HomePageProps<Post>> = () => {
              <CardContent>
                <AvatarWrapper>
                  <Avatar src={post.author.photo} alt={post.author.name} />
-                 <div style={{ marginLeft: '10px' }}>
-                   <Typography variant="subtitle1">{post.author.name}</Typography>
-                   <Typography variant="caption">{post.author.accountPlan}</Typography>
-                 </div>
+                    <div style={{ marginLeft: '10px' }}>
+                      <Typography variant="subtitle1">{post.author.name}</Typography>
+                      <Typography variant="caption">{post.author.accountPlan}</Typography>
+                    </div>
                </AvatarWrapper>
                {editingPostId === post.id ? (
                  <>
