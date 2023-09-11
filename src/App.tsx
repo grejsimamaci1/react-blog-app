@@ -59,8 +59,8 @@ const App: React.FC = () => {
     {
       id: 102,
       name: 'Sara Sara',
-      email: 'sara@example.com',
-      password: 'password',
+      email: '2',
+      password: '2',
       photo: 'https://example.com/john-doe-profile.jpg',
       accountPlan: 'Premium',
     },

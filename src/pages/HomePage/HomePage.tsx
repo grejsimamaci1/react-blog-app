@@ -5,7 +5,7 @@ import CreatePostModal from '../../components/CreatePostModal';
 import { useDispatch, useSelector } from 'react-redux';
 import { logout } from '../../redux/authSlice';
 import { HomePageProps, Post } from '../../types';
-import { addPost, removePost, editPost } from '../../redux/postsSlice';
+import { addPost, removePost, editPost} from '../../redux/postsSlice';
 import {
   Header,
   AddPostWrapper,
@@ -18,8 +18,10 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import AddIcon from '@mui/icons-material/Add';
 import LogoutIcon from '@mui/icons-material/Logout';
+import { resetState as resetAuthState } from '../../redux/authSlice';
+import { resetState as resetPostsState } from '../../redux/postsSlice';
 
-const HomePage: React.FC<HomePageProps<Post>> = () => {
+const HomePage: React.FC<HomePageProps<Post>> = ({dummyPosts}) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -66,11 +68,16 @@ const HomePage: React.FC<HomePageProps<Post>> = () => {
     dispatch(addPost(newPost));
   };
 
+ 
   const handleLogout = () => {
     dispatch(logout());
+    dispatch(resetAuthState());
+    dispatch(resetPostsState(dummyPosts)); 
     localStorage.removeItem('accessToken');
     navigate('/');
   };
+
+  
 
   useEffect(() => {
     if (!isAuthenticated) {

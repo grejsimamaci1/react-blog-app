@@ -20,6 +20,7 @@ const postsSlice = createSlice({
                   },
                   comments: [],
             };
+            
             state.push(newPost);
             // return [...state, newPost];
         },
@@ -37,19 +38,20 @@ const postsSlice = createSlice({
               };
           
               const index = state.indexOf(post);
-          
               state[index] = updatedPost;
             }
           },
         removePost: (state, action) => {
+         
             const postId = action.payload;
-
             return state.filter(post => post.id !== postId)
           },
 
         removeComment: (state, action) =>{
+
           const { postId, commentId } = action.payload;
           const post = state.find((post) => post.id === postId);
+          
 
           if(post) {
             const updatedComments = post.comments.filter(comment => comment.id !== commentId);
@@ -62,8 +64,10 @@ const postsSlice = createSlice({
             state[index] = updatedPost;
           }
         },
+
         editPost: (state, action) =>{
           const { postId, updatedContent} = action.payload;
+          console.log('updatedcontent i edit post', action)
           const post = state.find((post) => post.id === postId);
 
           if (post) {
@@ -89,14 +93,16 @@ const postsSlice = createSlice({
             };
         
             const index = state.indexOf(post);
-        
             state[index] = updatedPost;
           }
         },
-        
+        resetState: (state, action) =>{
+          return action.payload;
+        }
+      
           
     },
 });
 
-export const { addPost, addComment, removePost, removeComment, editPost, editComment} =  postsSlice.actions;
+export const { addPost, addComment, removePost, removeComment, editPost, editComment, resetState } =  postsSlice.actions;
 export default postsSlice.reducer;

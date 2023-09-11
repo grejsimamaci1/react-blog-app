@@ -31,14 +31,21 @@ export const authSlice = createSlice({
       state.token = action.payload.token;
     },
     logout: (state) => {
-      console.log('User is logging out');
+      
       state.isAuthenticated = false;
       state.user = null;
       state.token = null;
     },
+    resetState: (state) => {
+      
+      state.isAuthenticated = initialState.isAuthenticated;
+      state.user = initialState.user;
+      state.token = initialState.token;
+    },
   },
 });
 
-export const { login, logout } = authSlice.actions;
+export const { login, logout, resetState } = authSlice.actions;
 
 export default authSlice.reducer;
+

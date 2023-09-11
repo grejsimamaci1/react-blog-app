@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { TextField, Button, Container, InputAdornment, Card, CardContent, Box } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { User, login } from '../../redux/authSlice';
+import { User, login  } from '../../redux/authSlice';
 import './LoginPage.css';
 import EmailIcon from '@mui/icons-material/Email';
 import LockIcon from '@mui/icons-material/Lock';
@@ -19,12 +19,16 @@ const LoginPage: React.FC<LoginPageProps> = ({ dummyUsers }) => {
   const [error, setError] = useState('');
 
   const handleLogin = () => {
+
     const user = dummyUsers.find((u) => u.email === email && u.password === password);
 
     if (user) {
+
       const dummyToken = 'dummy-access-token';
       localStorage.setItem('accessToken', dummyToken);
+
       dispatch(login({ user, token: dummyToken }));
+     
       setError('');
       navigate('/home');
 
