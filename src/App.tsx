@@ -8,12 +8,12 @@ import { User} from './redux/authSlice';
 import authReducer from './redux/authSlice';
 import postsReducer from './redux/postsSlice';
 import { Post} from './types';
-import { createStore,combineReducers, applyMiddleware } from 'redux'; 
+import { combineReducers } from 'redux'; 
 import thunk from 'redux-thunk'; 
-
+import { configureStore } from '@reduxjs/toolkit'; 
+// import { composeWithDevTools } from 'redux-devtools-extension';
 
 const App: React.FC = () => {
-
   const [dummyPosts, setDummyPosts] = useState<Post[]>([
     {
       id: 1,
@@ -72,17 +72,20 @@ const App: React.FC = () => {
       photo: 'https://example.com/john-doe-profile.jpg',
       accountPlan: 'Premium',
     }
-   
   ];
 
   const rootReducer = combineReducers({
     auth: authReducer,
     posts: postsReducer,
   });
-  
-  const store = createStore(rootReducer, { posts: dummyPosts}, applyMiddleware(thunk));
-  
 
+  
+  const store = configureStore({
+    reducer: rootReducer,
+    preloadedState: { posts: dummyPosts },
+    middleware: [thunk],
+    devTools: process.env.NODE_ENV !== "production", 
+  });
 
   return (
     <Provider store={store}>
@@ -98,3 +101,4 @@ const App: React.FC = () => {
 }
 
 export default App;
+

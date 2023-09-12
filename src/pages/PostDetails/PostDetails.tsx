@@ -10,8 +10,10 @@ import EditIcon from '@mui/icons-material/Edit';
 import AddIcon from '@mui/icons-material/Add';
 import LogoutIcon from '@mui/icons-material/Logout';
 import { Header } from '../../styles';
+import { resetState as resetAuthState } from '../../redux/authSlice';
+import { resetState as resetPostsState } from '../../redux/postsSlice';
 
-const PostDetails: React.FC<PostDetailsProps<Post>> = () => {
+const PostDetails: React.FC<PostDetailsProps<Post>> = ({dummyPosts}) => {
   const [newComment, setNewComment] = useState('');
   const [editingCommentId, setEditingCommentId] = useState<number | null>(null);
   const [editedCommentText, setEditedCommentText] = useState<string>('');
@@ -63,6 +65,8 @@ const PostDetails: React.FC<PostDetailsProps<Post>> = () => {
 
   const handleLogout = () => {
     dispatch(logout());
+    dispatch(resetAuthState());
+    dispatch(resetPostsState(dummyPosts)); 
     localStorage.removeItem('accessToken');
     navigate('/');
   };
