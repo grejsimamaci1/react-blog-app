@@ -41,8 +41,8 @@ const App: React.FC = () => {
         accountPlan: 'Basic',
       },
       comments: [
-        { id: 3, text: 'Interesting.', author: 'Charlie' },
-        { id: 4, text: 'Thanks for sharing!', author: 'David' },
+        { id: 1, text: 'Interesting.', author: 'Charlie' },
+        { id: 2, text: 'Thanks for sharing!', author: 'David' },
       ],
     }
   ]);

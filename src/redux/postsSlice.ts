@@ -21,8 +21,8 @@ const postsSlice = createSlice({
                   comments: [],
             };
             
-            state.push(newPost);
-            // return [...state, newPost];
+            // state.push(newPost);
+            return [...state, newPost];
         },
         addComment: (state, action) => {
             const { postId, text } = action.payload;
@@ -91,7 +91,7 @@ const postsSlice = createSlice({
                 comment.id === commentId ? { ...comment, text } : comment
               ),
             };
-        
+       
             const index = state.indexOf(post);
             state[index] = updatedPost;
           }

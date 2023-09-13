@@ -18,7 +18,7 @@ const PostDetails: React.FC<PostDetailsProps<Post>> = ({dummyPosts}) => {
   const [editingCommentId, setEditingCommentId] = useState<number | null>(null);
   const [editedCommentText, setEditedCommentText] = useState<string>('');
   
-
+  // console.log('editing', editingCommentId)
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { postId } = useParams();
@@ -26,7 +26,7 @@ const PostDetails: React.FC<PostDetailsProps<Post>> = ({dummyPosts}) => {
   const posts = useSelector((state: { posts: Post[]}) => state.posts);
 
   const selectedPost = posts.find((post) => post.id.toString() === postId);
-  console.log('selected post', selectedPost )
+  // console.log('selected post', selectedPost?.comments )
 
   const isAuthenticated = useSelector(
     (state: { auth: { isAuthenticated: boolean, user: { name: string } | null } }) => state.auth.isAuthenticated
@@ -102,6 +102,8 @@ const PostDetails: React.FC<PostDetailsProps<Post>> = ({dummyPosts}) => {
             }}>
               <CardContent>
                 {editingCommentId === comment.id ? (
+
+                 
                   // <TextField
                   //   label="Edit Comment"
                   //   multiline
@@ -166,3 +168,7 @@ const PostDetails: React.FC<PostDetailsProps<Post>> = ({dummyPosts}) => {
 };
 
 export default PostDetails;
+
+
+
+
