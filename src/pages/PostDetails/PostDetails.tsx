@@ -26,7 +26,7 @@ const PostDetails: React.FC<PostDetailsProps<Post>> = ({dummyPosts}) => {
   const posts = useSelector((state: { posts: Post[]}) => state.posts);
 
   const selectedPost = posts.find((post) => post.id.toString() === postId);
-  // console.log('selected post', selectedPost?.comments )
+  console.log('selected post', selectedPost?.comments )
 
   const isAuthenticated = useSelector(
     (state: { auth: { isAuthenticated: boolean, user: { name: string } | null } }) => state.auth.isAuthenticated

@@ -25,22 +25,23 @@ const postsSlice = createSlice({
             return [...state, newPost];
         },
         addComment: (state, action) => {
-            const { postId, text } = action.payload;
-            const post = state.find((post) => post.id === postId);
-          
-            if (post) {
-              const updatedPost = {
-                ...post,
-                comments: [
-                  ...post.comments,
-                  { id: post.comments.length + 1, text, author: 'Current User' },
-                ],
-              };
-          
-              const index = state.indexOf(post);
-              state[index] = updatedPost;
-            }
-          },
+          const { postId, text } = action.payload;
+          const post = state.find((post) => post.id === postId);
+        
+          if (post) {
+            const newCommentId = Math.max(...post.comments.map(comment => comment.id), 0) + 1;
+            const updatedPost = {
+              ...post,
+              comments: [
+                ...post.comments,
+                { id: newCommentId, text, author: 'Current User' },
+              ],
+            };
+        
+            const index = state.indexOf(post);
+            state[index] = updatedPost;
+          }
+        },
         removePost: (state, action) => {
          
             const postId = action.payload;
