@@ -73,11 +73,8 @@ const HomePage: React.FC<HomePageProps<Post>> = ({dummyPosts}) => {
     dispatch(logout());
     dispatch(resetAuthState());
     dispatch(resetPostsState(dummyPosts)); 
-    localStorage.removeItem('accessToken');
     navigate('/');
   };
-
-  
 
   useEffect(() => {
     if (!isAuthenticated) {
@@ -159,7 +156,6 @@ const HomePage: React.FC<HomePageProps<Post>> = ({dummyPosts}) => {
        ))}
      </Grid>
      <CreatePostModal isOpen={isModalOpen} onClose={closeModal} onCreatePost={handleAddPost} />
-    
      </>
      )}
      </>
@@ -167,3 +163,6 @@ const HomePage: React.FC<HomePageProps<Post>> = ({dummyPosts}) => {
 };
 
 export default HomePage;
+
+
+

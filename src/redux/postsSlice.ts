@@ -52,8 +52,7 @@ const postsSlice = createSlice({
 
           const { postId, commentId } = action.payload;
           const post = state.find((post) => post.id === postId);
-          
-
+        
           if(post) {
             const updatedComments = post.comments.filter(comment => comment.id !== commentId);
             const updatedPost = {

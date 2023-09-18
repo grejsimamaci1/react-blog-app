@@ -31,13 +31,12 @@ export const authSlice = createSlice({
       state.token = action.payload.token;
     },
     logout: (state) => {
-      
+      localStorage.removeItem('accessToken');
       state.isAuthenticated = false;
       state.user = null;
       state.token = null;
     },
     resetState: (state) => {
-      
       state.isAuthenticated = initialState.isAuthenticated;
       state.user = initialState.user;
       state.token = initialState.token;
